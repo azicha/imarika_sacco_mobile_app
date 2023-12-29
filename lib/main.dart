@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:imarika_sacco_mobile_app/home_page.dart';
+import 'package:imarika_sacco_mobile_app/splash_screen_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,10 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const HomePage(),
+      home: const SplashScreenPage(),
       title: 'Imarika Sacco',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: const Color.fromRGBO(103, 58, 183, 1),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: const Color.fromRGBO(103, 58, 183, 1)),
         useMaterial3: true,
       ),
     );

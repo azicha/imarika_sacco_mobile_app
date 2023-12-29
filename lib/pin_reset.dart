@@ -12,72 +12,74 @@ class PinReset extends StatelessWidget {
       ),
     );
     return Scaffold(
+        appBar: AppBar(
+          title: const Text('Change Pin'),
+        ),
         body: Padding(
-      padding: const EdgeInsets.all(40.0),
-      child: Column(
-        children: [
-          Container(
-            height: 250,
-            decoration: const BoxDecoration(
-              color: Colors.deepPurple,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
+          padding: const EdgeInsets.all(40.0),
+          child: Column(
+            children: [
+              Container(
+                height: 250,
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple,
+                  borderRadius: BorderRadius.circular(40),
+                  // bottomLeft: Radius.circular(20),
+                  // bottomRight: Radius.circular(20),
+                ),
               ),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const TextField(
-            decoration: InputDecoration(
-              hintText: 'Enter Your Current Pin',
-              hintStyle: TextStyle(
-                color: Colors.black,
+              const SizedBox(
+                height: 20,
               ),
-              focusedBorder: border,
-            ),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          const TextField(
-            decoration: InputDecoration(
-              hintText: 'Enter Your New Pin',
-              hintStyle: TextStyle(
-                color: Colors.black,
+              const TextField(
+                decoration: InputDecoration(
+                  hintText: 'Enter Your Current Pin',
+                  hintStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  focusedBorder: border,
+                ),
               ),
-              focusedBorder: border,
-            ),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          const TextField(
-            decoration: InputDecoration(
-              hintText: 'Confirm Your New Pin',
-              hintStyle: TextStyle(
-                color: Colors.black,
+              const SizedBox(
+                height: 40,
               ),
-              focusedBorder: border,
-            ),
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          ElevatedButton(
-            onPressed: () {},
-            style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
-              foregroundColor: MaterialStatePropertyAll(Colors.white),
-              fixedSize: MaterialStatePropertyAll(
-                Size(150, 50),
+              const TextField(
+                decoration: InputDecoration(
+                  hintText: 'Enter Your New Pin',
+                  hintStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  focusedBorder: border,
+                ),
               ),
-            ),
-            child: const Text('Re-Set'),
+              const SizedBox(
+                height: 40,
+              ),
+              const TextField(
+                decoration: InputDecoration(
+                  hintText: 'Confirm Your New Pin',
+                  hintStyle: TextStyle(
+                    color: Colors.black,
+                  ),
+                  focusedBorder: border,
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                style: const ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
+                  foregroundColor: MaterialStatePropertyAll(Colors.white),
+                  fixedSize: MaterialStatePropertyAll(
+                    Size(150, 50),
+                  ),
+                ),
+                child: const Text('ReSet'),
+              ),
+            ],
           ),
-        ],
-      ),
-    ));
+        ));
   }
 }

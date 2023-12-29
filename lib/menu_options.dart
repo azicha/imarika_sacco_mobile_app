@@ -7,6 +7,9 @@ class MenuOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile'),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -21,7 +24,7 @@ class MenuOptions extends StatelessWidget {
             const Text(
               'ASKA KAUCHI KALUME',
               style: TextStyle(
-                color: Colors.deepPurple,
+                color: Color(0xFF673AB7),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -59,9 +62,7 @@ class MenuOptions extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () {
-                  
-                },
+                onPressed: () {},
                 style: const ButtonStyle(
                     backgroundColor: MaterialStatePropertyAll(Colors.white),
                     foregroundColor: MaterialStatePropertyAll(Colors.black),

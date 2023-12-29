@@ -9,10 +9,10 @@ class MainServicesCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 150,
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(16.0),
           child: ListView.builder(
             itemCount: otherServices.length,
             scrollDirection: Axis.horizontal,
@@ -20,7 +20,7 @@ class MainServicesCard extends StatelessWidget {
               final mainService = mainServices[index];
               return Card(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(20.0),
                   child: Column(
                     children: [
                       Icon(

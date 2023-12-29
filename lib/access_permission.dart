@@ -19,7 +19,7 @@ class AccessPermission extends StatelessWidget {
           children: [
             const Icon(
               Icons.person_2,
-              size: 32,
+              size: 96,
             ),
             const SizedBox(
               height: 20,
