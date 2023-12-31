@@ -1,66 +1,98 @@
 import 'package:flutter/material.dart';
 
-class AccessPermission extends StatelessWidget {
+class AccessPermission extends StatefulWidget {
   const AccessPermission({super.key});
 
   @override
+  State<AccessPermission> createState() => _AccessPermissionState();
+}
+
+class _AccessPermissionState extends State<AccessPermission> {
+  TextEditingController controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    const border = OutlineInputBorder(
-      borderSide: BorderSide(
-        width: 1.0,
-        style: BorderStyle.solid,
-      ),
-      borderRadius: BorderRadius.all(Radius.circular(80)),
-    );
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.person_2,
-              size: 96,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Text(
-              'Enter Pin',
-              style: TextStyle(
-                fontSize: 24,
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: TextField(
-                style: TextStyle(
-                  color: Colors.black,
-                ),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  focusedBorder: border,
-                  enabledBorder: border,
-                ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.person_2,
+                size: 96,
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {},
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll(Colors.white),
-                  foregroundColor: MaterialStatePropertyAll(Colors.black),
-                ),
-                child: const Text('Log In'),
+              padding: const EdgeInsets.all(20.0),
+              child: TextField(
+                controller: controller,
+                style: const TextStyle(color: Colors.black),
               ),
+            ),
+            Row(
+              children: [
+                buildButton('1'),
+                buildButton('2'),
+                buildButton('3'),
+              ],
+            ),
+            Row(
+              children: [
+                buildButton('4'),
+                buildButton('5'),
+                buildButton('6'),
+              ],
+            ),
+            Row(
+              children: [
+                buildButton('7'),
+                buildButton('8'),
+                buildButton('9'),
+              ],
+            ),
+            Row(
+              children: [
+                buildButton('OK'),
+                buildButton('0'),
+                buildButton('Del', onPressed: _backspace),
+              ],
             ),
           ],
         ),
       ),
     );
+  }
+
+  Widget buildButton(String text, {VoidCallback? onPressed}) {
+    return Expanded(
+      child: TextButton(
+        onPressed: onPressed ?? () => _input(text),
+        child: Text(text),
+      ),
+    );
+  }
+
+  void _input(String text) {
+    final value = controller.text + text;
+    controller.text = value;
+  }
+
+  void _backspace() {
+    final value = controller.text;
+    if (value.isNotEmpty) {
+      controller.text = value.substring(0, value.length - 1);
+    }
   }
 }
