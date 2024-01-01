@@ -8,71 +8,75 @@ class MenuOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 231, 230, 233),
         title: const Text('Profile'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.person_2,
-                size: 96,
-              ),
-            ),
-            const Text(
-              'ASKA KAUCHI KALUME',
-              style: TextStyle(
-                color: Color(0xFF673AB7),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text('254743983273'),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const PinReset();
-                      },
-                    ),
-                  );
-                },
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.white),
-                    foregroundColor: MaterialStatePropertyAll(Colors.black),
-                    fixedSize: MaterialStatePropertyAll(
-                      Size(710, 50),
-                    )),
-                child: const Text('CHANGE PIN'),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
+        child: Padding(
+          padding: const EdgeInsets.all(40.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
                 onPressed: () {},
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.white),
-                    foregroundColor: MaterialStatePropertyAll(Colors.black),
-                    fixedSize: MaterialStatePropertyAll(
-                      Size(710, 50),
-                    )),
-                child: const Text('LOGOUT'),
+                icon: const Icon(
+                  Icons.person_2,
+                  size: 96,
+                ),
               ),
-            ),
-          ],
+              const Text(
+                'ASKA KAUCHI KALUME',
+                style: TextStyle(
+                  color: Color(0xFF673AB7),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text('254743983273'),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return const PinReset();
+                        },
+                      ),
+                    );
+                  },
+                  style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.white),
+                      foregroundColor: MaterialStatePropertyAll(Colors.black),
+                      fixedSize: MaterialStatePropertyAll(
+                        Size(710, 50),
+                      )),
+                  child: const Text('CHANGE PIN'),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.white),
+                      foregroundColor: MaterialStatePropertyAll(Colors.black),
+                      fixedSize: MaterialStatePropertyAll(
+                        Size(710, 50),
+                      )),
+                  child: const Text('LOGOUT'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

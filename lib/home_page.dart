@@ -24,29 +24,37 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: pages[currentPage],
       bottomNavigationBar: BottomNavigationBar(
+        unselectedItemColor: Colors.black,
+        selectedItemColor: Colors.deepPurple,
+        backgroundColor: const Color.fromARGB(255, 231, 230, 233),
         onTap: (value) {
           setState(() {
             currentPage = value;
           });
         },
         currentIndex: currentPage,
-        iconSize: 35,
+        iconSize: 30,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+              color: Colors.deepPurple,
+            ),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.savings),
+            icon: Icon(
+              Icons.savings,
+              color: Colors.deepPurple,
+            ),
             label: 'Savings',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.payments),
+            icon: Icon(
+              Icons.payments,
+              color: Colors.deepPurple,
+            ),
             label: 'Loans',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_box),
-            label: 'Account',
           ),
         ],
       ),

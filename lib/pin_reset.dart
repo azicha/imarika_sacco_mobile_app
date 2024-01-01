@@ -13,6 +13,7 @@ class PinReset extends StatelessWidget {
     );
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: const Color.fromARGB(255, 231, 230, 233),
           title: const Text('Change Pin'),
         ),
         body: Padding(

@@ -42,8 +42,9 @@ class HomeDetails extends StatelessWidget {
               color: const Color.fromARGB(255, 231, 230, 233),
               boxShadow: const [BoxShadow(blurRadius: 0.05)],
               borderRadius: BorderRadius.vertical(
-                  bottom: Radius.elliptical(
-                      MediaQuery.of(context).size.width, 20.0)),
+                bottom:
+                    Radius.elliptical(MediaQuery.of(context).size.width, 30.0),
+              ),
             ),
             child: Column(
               children: [
@@ -56,7 +57,7 @@ class HomeDetails extends StatelessWidget {
                 ),
                 const Text('Good Morning, Aska'),
                 const SizedBox(height: 10),
-                const Text('Welcome Back')
+                const Text('Welcome Back'),
               ],
             ),
           ),
@@ -66,9 +67,7 @@ class HomeDetails extends StatelessWidget {
           const Expanded(
             child: MainServicesCard(),
           ),
-
           const SizedBox(height: 40),
-
           Expanded(
             child: ListView.builder(
               itemCount: otherServices.length,
