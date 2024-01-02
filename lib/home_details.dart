@@ -31,7 +31,15 @@ class HomeDetails extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 231, 230, 233),
+        flexibleSpace: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: <Color>[Colors.purple, Colors.deepPurple],
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: [
