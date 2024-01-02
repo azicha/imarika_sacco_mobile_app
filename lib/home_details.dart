@@ -45,6 +45,12 @@ class HomeDetails extends StatelessWidget {
                 bottom:
                     Radius.elliptical(MediaQuery.of(context).size.width, 30.0),
               ),
+              gradient: const LinearGradient(
+                  colors: [Colors.deepPurple, Colors.purple],
+                  begin: FractionalOffset(0.0, 0.0),
+                  end: FractionalOffset(0.5, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp),
             ),
             child: Column(
               children: [
