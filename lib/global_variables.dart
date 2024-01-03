@@ -35,3 +35,7 @@ final otherServices = [
     'serviceIcon': Icons.money,
   },
 ];
+
+final enquiries = [
+  
+];

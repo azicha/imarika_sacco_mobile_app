@@ -22,7 +22,6 @@ class LogInPage extends StatelessWidget {
             fontSize: 28,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 231, 230, 233),
       ),
       body: Padding(
         padding: const EdgeInsets.only(

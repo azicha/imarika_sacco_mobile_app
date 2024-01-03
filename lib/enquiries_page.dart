@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:imarika_sacco_mobile_app/enquiries_form.dart';
 
 class EnquiriesPage extends StatelessWidget {
   const EnquiriesPage({super.key});
@@ -7,7 +8,6 @@ class EnquiriesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 231, 230, 233),
         title: const Text('Back'),
       ),
       body: Padding(
@@ -25,15 +25,48 @@ class EnquiriesPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            Container(
-              width: double.infinity,
-              height: 50,
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(245, 247, 249, 1),
-                borderRadius: BorderRadius.circular(10),
+            ExpansionTile(
+              title: const Text("How do I withdraw money?"), //header title
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  width: double.infinity,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: const [
+                      BoxShadow(
+                        blurRadius: 7,
+                        color: Color.fromARGB(255, 180, 182, 183),
+                      ),
+                    ],
+                  ),
+                  child: const Text("Answers for Question One"),
+                ),
+              ],
+            ),
+            InkWell(
+              child: const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'Have any Question? Ask here.',
+                  style: TextStyle(
+                    color: Colors.deepPurple,
+                    fontSize: 18,
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
               ),
-              child: const Text('How do I withdraw money'),
-            )
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const EnquiriesForm();
+                    },
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

@@ -8,7 +8,6 @@ class MenuOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 231, 230, 233),
         title: const Text('Profile'),
       ),
       body: Center(

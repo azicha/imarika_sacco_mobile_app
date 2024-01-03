@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
     HomeDetails(),
     AccessPermission(),
     AccessPermission(),
-    AccessPermission(),
   ];
 
   @override
