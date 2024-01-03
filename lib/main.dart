@@ -17,6 +17,9 @@ class MyApp extends StatelessWidget {
       home: const SplashScreenPage(),
       title: 'Imarika Sacco',
       theme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 231, 230, 233),
+        ),
         scaffoldBackgroundColor: const Color.fromARGB(255, 231, 230, 233),
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromRGBO(103, 58, 183, 1)),
