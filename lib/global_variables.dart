@@ -21,7 +21,7 @@ final mainServices = [
 final otherServices = [
   {
     'id': 0,
-    'serviceName': 'Statements',
+    'serviceName': 'Statement',
     'serviceIcon': Icons.money,
   },
   {
@@ -37,5 +37,59 @@ final otherServices = [
 ];
 
 final enquiries = [
-  
+  {
+    'id': 0,
+    'question': '',
+    'answer': '',
+  },
+  {
+    'id': 1,
+    'question': 'How to borrow a loan',
+    'answer': '',
+  },
+  {
+    'id': 2,
+    'question': '',
+    'answer': '',
+  },
+  {
+    'id': 3,
+    'question': '',
+    'answer': '',
+  },
+  {
+    'id': 4,
+    'question': '',
+    'answer': '',
+  },
+  {
+    'id': 5,
+    'question': '',
+    'answer': '',
+  },
+  {
+    'id': 6,
+    'question': '',
+    'answer': '',
+  },
+  {
+    'id': 7,
+    'question': '',
+    'answer': '',
+  },
+  {
+    'id': 8,
+    'question': '',
+    'answer': '',
+  },
+  {
+    'id': 9,
+    'question': '',
+    'answer': '',
+  },
+  {
+    'id': 10,
+    'question': '',
+    'answer': '',
+  },
 ];

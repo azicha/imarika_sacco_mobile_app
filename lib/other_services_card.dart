@@ -11,9 +11,16 @@ class OtherServicesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
-      child: Card(
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Container(
+        // width: double.infinity,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(

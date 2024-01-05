@@ -8,31 +8,35 @@ class MainServicesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 150,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+    return Positioned(
+      top: 10,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+          ),
           child: ListView.builder(
-            itemCount: otherServices.length,
+            itemCount: mainServices.length,
             scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
+            itemBuilder: ((context, index) {
               final mainService = mainServices[index];
-              return Card(
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      Icon(
-                        mainService['serviceIcon'] as IconData,
-                        size: 32,
-                      ),
-                      Text(mainService['serviceName'] as String),
-                    ],
-                  ),
+              return Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Icon(
+                      mainService['serviceIcon'] as IconData,
+                      size: 32,
+                    ),
+                    Text(mainService['serviceName'] as String),
+                  ],
                 ),
               );
-            },
+            }),
           ),
         ),
       ),
