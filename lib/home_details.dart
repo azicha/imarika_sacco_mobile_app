@@ -4,6 +4,7 @@ import 'package:imarika_sacco_mobile_app/main_services_card.dart';
 import 'package:imarika_sacco_mobile_app/menu_options.dart';
 import 'package:imarika_sacco_mobile_app/other_services_card.dart';
 
+
 class HomeDetails extends StatelessWidget {
   const HomeDetails({super.key});
 
@@ -79,7 +80,8 @@ class HomeDetails extends StatelessWidget {
             height: 40,
           ),
           const Expanded(
-            child: MainServicesCard(),
+            child: MainServicesCard(
+            ),
           ),
           const SizedBox(height: 40),
           Expanded(
@@ -91,6 +93,7 @@ class HomeDetails extends StatelessWidget {
                 return OtherServicesCard(
                   serviceIcon: otherService['serviceIcon'] as IconData,
                   serviceName: otherService['serviceName'] as String,
+                  page: otherService['page'] as Widget,
                 );
               },
             ),
