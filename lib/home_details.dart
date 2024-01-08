@@ -4,7 +4,6 @@ import 'package:imarika_sacco_mobile_app/main_services_card.dart';
 import 'package:imarika_sacco_mobile_app/menu_options.dart';
 import 'package:imarika_sacco_mobile_app/other_services_card.dart';
 
-
 class HomeDetails extends StatelessWidget {
   const HomeDetails({super.key});
 
@@ -29,6 +28,7 @@ class HomeDetails extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 24,
+            color: Colors.white,
           ),
         ),
         centerTitle: true,
@@ -67,7 +67,7 @@ class HomeDetails extends StatelessWidget {
                   onPressed: () {},
                   icon: const Icon(
                     Icons.person_2_rounded,
-                    size: 64,
+                    size: 128,
                   ),
                 ),
                 const Text('Good Morning, Aska'),
@@ -80,8 +80,7 @@ class HomeDetails extends StatelessWidget {
             height: 40,
           ),
           const Expanded(
-            child: MainServicesCard(
-            ),
+            child: MainServicesCard(),
           ),
           const SizedBox(height: 40),
           Expanded(

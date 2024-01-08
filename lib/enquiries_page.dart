@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imarika_sacco_mobile_app/enquiries_form.dart';
+import 'package:imarika_sacco_mobile_app/enquiries_list.dart';
+import 'package:imarika_sacco_mobile_app/global_variables.dart';
 
 class EnquiriesPage extends StatelessWidget {
   const EnquiriesPage({super.key});
@@ -25,25 +27,18 @@ class EnquiriesPage extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
-            ExpansionTile(
-              title: const Text("How do I withdraw money?"), //header title
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  width: double.infinity,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [
-                      BoxShadow(
-                        blurRadius: 7,
-                        color: Color.fromARGB(255, 180, 182, 183),
-                      ),
-                    ],
-                  ),
-                  child: const Text("Answers for Question One"),
-                ),
-              ],
+            Expanded(
+              child: ListView.builder(
+                itemCount: enquiries.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: ((context, index) {
+                  final enquiry = enquiries[index];
+                  return EnquiriesList(
+                    question: enquiry['question'] as String,
+                    answer: enquiry['answer'] as String,
+                  );
+                }),
+              ),
             ),
             InkWell(
               child: const Padding(
