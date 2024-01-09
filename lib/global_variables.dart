@@ -105,3 +105,30 @@ final enquiries = [
     'answer': 'Answers for Question One',
   },
 ];
+
+final statementsservices = [
+  {
+    'id': 0,
+    'serviceIcon': Icons.money,
+    'serviceName': 'Recent Transations',
+    'icon': Icons.send_to_mobile_outlined,
+  },
+  {
+    'id': 1,
+    'serviceIcon': Icons.money,
+    'serviceName': 'Money In',
+    'icon': Icons.send_to_mobile_outlined,
+  },
+  {
+    'id': 2,
+    'serviceIcon': Icons.money,
+    'serviceName': 'Money Out',
+    'icon': Icons.send_to_mobile_outlined,
+  },
+  {
+    'id': 3,
+    'serviceIcon': Icons.money,
+    'serviceName': 'Get Full Statement',
+    'icon': Icons.send_to_mobile_outlined,
+  },
+];
