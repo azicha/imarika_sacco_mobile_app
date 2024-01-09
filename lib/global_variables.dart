@@ -4,7 +4,7 @@ import 'package:imarika_sacco_mobile_app/enquiries_page.dart';
 import 'package:imarika_sacco_mobile_app/send_money_page.dart';
 import 'package:imarika_sacco_mobile_app/statements_page.dart';
 import 'package:imarika_sacco_mobile_app/transfer_cash_page.dart';
-import 'package:imarika_sacco_mobile_app/withdraw_page.dart';
+import 'package:imarika_sacco_mobile_app/budget_page.dart';
 
 final mainServices = [
   {
@@ -36,9 +36,9 @@ final otherServices = [
   },
   {
     'id': 2,
-    'serviceName': 'Withdraw',
+    'serviceName': 'Budget',
     'serviceIcon': Icons.money,
-    'page': const WithdrawPage()
+    'page': const BudgetPage()
   },
   {
     'id': 1,
