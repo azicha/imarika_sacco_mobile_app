@@ -25,17 +25,19 @@ class StatementsPage extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                  itemCount: statementsservices.length,
-                  scrollDirection: Axis.vertical,
-                  itemBuilder: ((context, index) {
-                    final statement = statementsservices[index];
-                    return StatementsList(
-                      serviceIcon: statement['serviceIcon'] as IconData,
-                      serviceName: statement['serviceName'] as String,
-                      icon: statement['icon'] as IconData,
-                    );
-                  })),
-            )
+                itemCount: statementsservices.length,
+                scrollDirection: Axis.vertical,
+                itemBuilder: ((context, index) {
+                  final statement = statementsservices[index];
+                  return StatementsList(
+                    serviceIcon: statement['serviceIcon'] as IconData,
+                    serviceName: statement['serviceName'] as String,
+                    icon: statement['icon'] as IconData,
+                    page: statement['page'] as Widget,
+                  );
+                }),
+              ),
+            ),
           ],
         ),
       ),

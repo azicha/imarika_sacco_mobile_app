@@ -42,26 +42,32 @@ class _AccessPermissionState extends State<AccessPermission> {
               ),
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 buildButton('1'),
                 buildButton('2'),
                 buildButton('3'),
               ],
             ),
+            const SizedBox(height: 20),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 buildButton('4'),
                 buildButton('5'),
                 buildButton('6'),
               ],
             ),
+            const SizedBox(height: 20),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 buildButton('7'),
                 buildButton('8'),
                 buildButton('9'),
               ],
             ),
+            const SizedBox(height: 20),
             Row(
               children: [
                 buildButton('OK'),

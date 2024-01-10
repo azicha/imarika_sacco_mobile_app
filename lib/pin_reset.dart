@@ -12,22 +12,13 @@ class PinReset extends StatelessWidget {
       ),
     );
     return Scaffold(
-        appBar: AppBar(   
+        appBar: AppBar(
           title: const Text('Change Pin'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(40.0),
           child: Column(
             children: [
-              Container(
-                height: 250,
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple,
-                  borderRadius: BorderRadius.circular(40),
-                  // bottomLeft: Radius.circular(20),
-                  // bottomRight: Radius.circular(20),
-                ),
-              ),
               const SizedBox(
                 height: 20,
               ),
@@ -76,7 +67,7 @@ class PinReset extends StatelessWidget {
                     Size(150, 50),
                   ),
                 ),
-                child: const Text('ReSet'),
+                child: const Text('Reset'),
               ),
             ],
           ),

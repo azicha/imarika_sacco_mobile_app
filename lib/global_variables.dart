@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:imarika_sacco_mobile_app/deposit_page.dart';
 import 'package:imarika_sacco_mobile_app/enquiries_page.dart';
+import 'package:imarika_sacco_mobile_app/full_statement_page.dart';
+import 'package:imarika_sacco_mobile_app/money_in.dart';
+import 'package:imarika_sacco_mobile_app/money_out_page.dart';
+import 'package:imarika_sacco_mobile_app/recent_transactions.dart';
 import 'package:imarika_sacco_mobile_app/send_money_page.dart';
 import 'package:imarika_sacco_mobile_app/statements_page.dart';
 import 'package:imarika_sacco_mobile_app/transfer_cash_page.dart';
@@ -111,24 +115,28 @@ final statementsservices = [
     'id': 0,
     'serviceIcon': Icons.money,
     'serviceName': 'Recent Transations',
-    'icon': Icons.send_to_mobile_outlined,
+    'icon': Icons.chevron_right,
+    'page': const RecentTransactions(),
   },
   {
     'id': 1,
     'serviceIcon': Icons.money,
     'serviceName': 'Money In',
-    'icon': Icons.send_to_mobile_outlined,
+    'icon': Icons.chevron_right,
+    'page': const MoneyIn(),
   },
   {
     'id': 2,
     'serviceIcon': Icons.money,
     'serviceName': 'Money Out',
-    'icon': Icons.send_to_mobile_outlined,
+    'icon': Icons.chevron_right,
+    'page': const MoneyOut(),
   },
   {
     'id': 3,
     'serviceIcon': Icons.money,
     'serviceName': 'Get Full Statement',
-    'icon': Icons.send_to_mobile_outlined,
+    'icon': Icons.chevron_right,
+    'page': const FullStatementPage(),
   },
 ];
