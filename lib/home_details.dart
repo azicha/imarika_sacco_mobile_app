@@ -7,6 +7,18 @@ import 'package:imarika_sacco_mobile_app/other_services_card.dart';
 class HomeDetails extends StatelessWidget {
   const HomeDetails({super.key});
 
+  String generateGreeting() {
+    int hour = DateTime.now().hour;
+
+    if (hour >= 5 && hour < 12) {
+      return 'Good morning!';
+    } else if (hour >= 12 && hour < 17) {
+      return 'Good afternoon!';
+    } else {
+      return 'Good evening!';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +82,21 @@ class HomeDetails extends StatelessWidget {
                     size: 128,
                   ),
                 ),
-                const Text('Good Morning, Aska'),
+                Text(
+                  generateGreeting(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                    color: Colors.white,
+                  ),
+                ),
                 const SizedBox(height: 10),
-                const Text('Welcome Back'),
+                const Text(
+                  'Welcome Back',
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
           ),
