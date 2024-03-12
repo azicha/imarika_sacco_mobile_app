@@ -10,12 +10,18 @@ dependencies:
     sdk: flutter 
   cupertino_icons: ^1.0.2
   another_flutter_splash_screen: ^1.2.0
-  firebase_core: ^2.25.4
+  firebase_core: ^2.25.5
+  cloud_firestore: ^4.15.0
+  hive: 
+  hive_flutter: 
+  intl:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+  hive_generator: 
+  build_runner: 
 # The following section is specific to Flutter packages.
 flutter:
   uses-material-design: true

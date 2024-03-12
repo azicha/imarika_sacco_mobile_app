@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class SendMoneyPage extends StatefulWidget {
   const SendMoneyPage({super.key});
@@ -8,7 +11,109 @@ class SendMoneyPage extends StatefulWidget {
 }
 
 class _SendMoneyPageState extends State<SendMoneyPage> {
+  DateTime date = DateTime.now();
+  final _user = Hive.box("user");
+  var userNo;
+  final phoneNumbercontroller = TextEditingController();
+  final amountcontroller = TextEditingController();
+  late int balance;
+  String transactiondate = "";
   int? test = 1;
+
+  void _confirmpyAlert(String number, String amount) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Send to mpesa',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          content: Text('Are you sure you want to send $amount to $number?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // context.read();
+                _transact();
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'Yes',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text(
+                'No',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    transactiondate = DateFormat.yMMMEd().format(date);
+    getUserphone();
+    getuser();
+    super.initState();
+  }
+
+  void getUserphone() {
+    var user = _user.get("USER");
+    setState(() {
+      userNo = user[0];
+      phoneNumbercontroller.text = userNo;
+    });
+  }
+
+  Future<void> getuser() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection("account_entitty")
+        .doc(userNo)
+        .get();
+    var data = snapshot.data() as Map<String, dynamic>;
+    setState(() {
+      balance = data['balance'];
+    });
+  }
+
+  Future<void> _transact() async {
+    if (balance >= int.parse(amountcontroller.text)) {
+      balance = balance - int.parse(amountcontroller.text);
+      await FirebaseFirestore.instance
+          .collection("account_entitty")
+          .doc(userNo)
+          .update({
+        "balance": balance,
+      });
+      Map<String, dynamic> transaction = {
+        "date":transactiondate,
+        "action":"Send",
+        'from': userNo,
+        "to": "Mpesa ${phoneNumbercontroller.text}",
+        "amount":int.parse(amountcontroller.text)
+      };
+      await FirebaseFirestore.instance
+          .collection("transactions_entity")
+          .add(transaction);
+    } else {
+      //show alert
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +148,7 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
                     onChanged: (value) {
                       setState(() {
                         test = value;
+                        phoneNumbercontroller.text = userNo;
                       });
                       debugPrint('$test');
                     }),
@@ -55,12 +161,14 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
                     onChanged: (value) {
                       setState(() {
                         test = value;
+                        phoneNumbercontroller.clear();
                       });
                       debugPrint('$test');
                     }),
               ),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: phoneNumbercontroller,
+                decoration: const InputDecoration(
                   hintText: 'ENTER NUMBER',
                   hintStyle: TextStyle(color: Colors.black26),
                   focusedBorder: border,
@@ -69,8 +177,9 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
               const SizedBox(
                 height: 40,
               ),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: amountcontroller,
+                decoration: const InputDecoration(
                   hintText: 'ENTER AMOUNT',
                   hintStyle: TextStyle(color: Colors.black26),
                   focusedBorder: border,
@@ -83,7 +192,13 @@ class _SendMoneyPageState extends State<SendMoneyPage> {
                 height: 40,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (phoneNumbercontroller.text.isNotEmpty &&
+                      amountcontroller.text.isNotEmpty) {
+                    _confirmpyAlert(
+                        phoneNumbercontroller.text, amountcontroller.text);
+                  }
+                },
                 style: const ButtonStyle(
                   foregroundColor: MaterialStatePropertyAll(Colors.white),
                   backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),

@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:imarika_sacco_mobile_app/loans_page.dart';
 
 class AccessPermission extends StatefulWidget {
-  const AccessPermission({super.key});
+  var page;
+  AccessPermission({super.key, required this.page});
 
   @override
   State<AccessPermission> createState() => _AccessPermissionState();
@@ -9,10 +13,48 @@ class AccessPermission extends StatefulWidget {
 
 class _AccessPermissionState extends State<AccessPermission> {
   TextEditingController controller = TextEditingController();
+  String pin = "";
+  final _user = Hive.box("user");
+  var userNo;
 
   @override
   void initState() {
+    getUserphone();
+    getuser();
     super.initState();
+  }
+
+  void getUserphone() {
+    var user = _user.get("USER");
+    setState(() {
+      userNo = user[0];
+    });
+  }
+
+  Future<void> getuser() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection("account_entitty")
+        .doc(userNo)
+        .get();
+    var data = snapshot.data() as Map<String, dynamic>;
+    setState(() {
+      pin = data['pin'];
+    });
+  }
+
+  void _login() {
+    if (pin == controller.text) {
+      //p
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) {
+            return widget.page;
+          },
+        ),
+      );
+    } else {
+      ///
+    }
   }
 
   @override
@@ -70,7 +112,7 @@ class _AccessPermissionState extends State<AccessPermission> {
             const SizedBox(height: 20),
             Row(
               children: [
-                buildButton('OK'),
+                buildButton('OK', onPressed: _login),
                 buildButton('0'),
                 buildButton('Del', onPressed: _backspace),
               ],
