@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class LoansPage extends StatefulWidget {
   const LoansPage({super.key});
@@ -8,6 +10,38 @@ class LoansPage extends StatefulWidget {
 }
 
 class _LoansPageState extends State<LoansPage> {
+  final amountcontroller = TextEditingController();
+  DateTime date = DateTime.now();
+  final _user = Hive.box('user');
+  var userNo;
+  int savingsBalance = 0;
+
+  @override
+  void initState() {
+    // transactiondate = DateFormat.yMMMEd().format(date);
+    getUserphone();
+    getuser();
+    super.initState();
+  }
+
+  void getUserphone() {
+    var user = _user.get("USER");
+    setState(() {
+      userNo = user[0];
+    });
+  }
+
+  Future<void> getuser() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection("savings_entity")
+        .doc(userNo)
+        .get();
+    var data = snapshot.data() as Map<String, dynamic>;
+    setState(() {
+      savingsBalance = data['balance'] * 3;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     const border = OutlineInputBorder(
@@ -31,28 +65,28 @@ class _LoansPageState extends State<LoansPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
                   child: Column(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.local_atm_outlined,
                         size: 46,
                       ),
-                      Text(
+                      const Text(
                         'Loan Limit',
                         style: TextStyle(
                             fontSize: 32, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
-                        '0.00',
-                        style: TextStyle(
+                        savingsBalance.toString(),
+                        style: const TextStyle(
                           fontSize: 20,
                         ),
                       ),

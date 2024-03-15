@@ -10,4 +10,8 @@ class LogDatabase {
   void updateData() {
     _user.put('USER', user);
   }
+
+  void deleteData() {
+    _user.delete('USER');
+  }
 }

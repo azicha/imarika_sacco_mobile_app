@@ -1,7 +1,66 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
-class PinReset extends StatelessWidget {
+class PinReset extends StatefulWidget {
   const PinReset({super.key});
+
+  @override
+  State<PinReset> createState() => _PinResetState();
+}
+
+class _PinResetState extends State<PinReset> {
+  final currentpincontroller = TextEditingController();
+  final changepincontroller = TextEditingController();
+  final confirmpincontroller = TextEditingController();
+  final _user = Hive.box('user');
+  var userNo;
+  String currentpin = '';
+
+  @override
+  void initState() {
+    getUserphone();
+    getuser();
+    super.initState();
+  }
+
+  void getUserphone() {
+    var user = _user.get("USER");
+    setState(() {
+      userNo = user[0];
+    });
+  }
+
+  Future<void> getuser() async {
+    DocumentSnapshot snapshot = await FirebaseFirestore.instance
+        .collection("account_entitty")
+        .doc(userNo)
+        .get();
+    var data = snapshot.data() as Map<String, dynamic>;
+    setState(() {
+      currentpin = data['pin'];
+    });
+  }
+
+  void changepin() async {
+    if (currentpincontroller.text.toString() == currentpin) {
+      if (changepincontroller.text == confirmpincontroller.text) {
+        await FirebaseFirestore.instance
+            .collection("account_entitty")
+            .doc(userNo)
+            .update({'pin': confirmpincontroller.text.trim()});
+      }
+    } else {
+      showDialog(
+        context: context,
+        builder: ((context) {
+          return const AlertDialog(
+            title: Text('Pin unmatched'),
+          );
+        }),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +81,9 @@ class PinReset extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: currentpincontroller,
+                decoration: const InputDecoration(
                   hintText: 'Enter Your Current Pin',
                   hintStyle: TextStyle(
                     color: Colors.black,
@@ -34,8 +94,9 @@ class PinReset extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: changepincontroller,
+                decoration: const InputDecoration(
                   hintText: 'Enter Your New Pin',
                   hintStyle: TextStyle(
                     color: Colors.black,
@@ -46,8 +107,9 @@ class PinReset extends StatelessWidget {
               const SizedBox(
                 height: 40,
               ),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                controller: confirmpincontroller,
+                decoration: const InputDecoration(
                   hintText: 'Confirm Your New Pin',
                   hintStyle: TextStyle(
                     color: Colors.black,
@@ -59,7 +121,7 @@ class PinReset extends StatelessWidget {
                 height: 30,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: changepin,
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
                   foregroundColor: MaterialStatePropertyAll(Colors.white),
