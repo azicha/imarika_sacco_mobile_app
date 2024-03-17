@@ -81,9 +81,6 @@ class _LoansPageState extends State<LoansPage> {
                       const SizedBox(
                         height: 10,
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
                       Text(
                         savingsBalance.toString(),
                         style: const TextStyle(
@@ -119,15 +116,54 @@ class _LoansPageState extends State<LoansPage> {
               height: 20,
             ),
             ElevatedButton(
-                onPressed: () {},
-                style: const ButtonStyle(
-                  foregroundColor: MaterialStatePropertyAll(Colors.white),
-                  backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
-                  fixedSize: MaterialStatePropertyAll(
-                    Size(150, 40),
+              onPressed: () {},
+              style: const ButtonStyle(
+                foregroundColor: MaterialStatePropertyAll(Colors.white),
+                backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
+                fixedSize: MaterialStatePropertyAll(
+                  Size(150, 40),
+                ),
+              ),
+              child: const Text('Submit'),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: double.infinity,
+              child: Card(
+                elevation: 10,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Text(
+                        'You\'ll be required to pay',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      Text(
+                        '10000',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'On.....',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                child: const Text('Submit'))
+              ),
+            )
           ],
         ),
       ),
