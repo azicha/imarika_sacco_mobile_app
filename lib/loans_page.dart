@@ -13,8 +13,15 @@ class _LoansPageState extends State<LoansPage> {
   final amountcontroller = TextEditingController();
   DateTime date = DateTime.now();
   final _user = Hive.box('user');
+  // ignore: prefer_typing_uninitialized_variables
   var userNo;
   int savingsBalance = 0;
+  List<String> duration = [
+    '90 DAYS @ 9.30%',
+    '180 DAYS @ 12.50%',
+    '1 YEAR @ 18.00%',
+  ];
+  String? selectedrate;
 
   @override
   void initState() {
@@ -29,6 +36,25 @@ class _LoansPageState extends State<LoansPage> {
     setState(() {
       userNo = user[0];
     });
+  }
+
+  void interestCalculations() {
+    if (amountcontroller.text.isNotEmpty && selectedrate != null) {
+      switch (selectedrate) {
+        case '90 DAYS @ 9.30%':
+          var interest = double.parse(amountcontroller.text) * 0.093;
+          print(interest);
+          break;
+        case '180 DAYS @ 12.50%':
+          var interest = double.parse(amountcontroller.text) * 0.125;
+          print(interest);
+          break;
+        case '1 YEAR @ 18.00%':
+          var interest = double.parse(amountcontroller.text) * 0.18;
+          print(interest);
+          break;
+      }
+    }
   }
 
   Future<void> getuser() async {
@@ -95,18 +121,21 @@ class _LoansPageState extends State<LoansPage> {
             const SizedBox(
               height: 20,
             ),
-            const TextField(
-              decoration: InputDecoration(
-                hintText: 'SELECT DURATION',
-                hintStyle: TextStyle(color: Colors.black26),
-                focusedBorder: border,
-              ),
-            ),
+            DropInput(
+                items: duration,
+                selectedValue: selectedrate,
+                hint: 'Select Duration',
+                onChanged: (String? value) {
+                  setState(() {
+                    selectedrate = value;
+                  });
+                }),
             const SizedBox(
               height: 20,
             ),
-            const TextField(
-              decoration: InputDecoration(
+            TextField(
+              controller: amountcontroller,
+              decoration: const InputDecoration(
                 hintText: 'ENTER AMOUNT',
                 hintStyle: TextStyle(color: Colors.black26),
                 focusedBorder: border,
@@ -116,7 +145,7 @@ class _LoansPageState extends State<LoansPage> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: interestCalculations,
               style: const ButtonStyle(
                 foregroundColor: MaterialStatePropertyAll(Colors.white),
                 backgroundColor: MaterialStatePropertyAll(Colors.deepPurple),
@@ -165,6 +194,68 @@ class _LoansPageState extends State<LoansPage> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class DropInput extends StatefulWidget {
+  final List<String> items;
+  final String hint;
+  final String? selectedValue;
+  final ValueChanged<String?> onChanged;
+
+  const DropInput({
+    required this.items,
+    required this.hint,
+    this.selectedValue,
+    required this.onChanged,
+  });
+
+  @override
+  _DropInputState createState() => _DropInputState();
+}
+
+class _DropInputState extends State<DropInput> {
+  String? selectedValue;
+
+  void handleChanged(String? value) {
+    setState(() {
+      selectedValue = value;
+    });
+    widget.onChanged(value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(),
+          color: Colors.grey[200],
+          borderRadius: BorderRadius.circular(7),
+        ),
+        child: DropdownButton<String>(
+          padding: const EdgeInsets.only(left: 8),
+          isExpanded: true,
+          borderRadius: BorderRadius.circular(20),
+          dropdownColor: Colors.grey[100],
+          icon: const Icon(Icons.arrow_drop_down),
+          iconSize: 24,
+          style: const TextStyle(color: Colors.black, fontSize: 20),
+          underline: Container(),
+          value: selectedValue ?? widget.selectedValue,
+          hint:
+              selectedValue == null ? Text(widget.hint) : Text(selectedValue!),
+          items: widget.items.map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
+          onChanged: handleChanged,
         ),
       ),
     );
