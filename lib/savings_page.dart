@@ -14,10 +14,13 @@ class _SavingsPageState extends State<SavingsPage> {
   DateTime date = DateTime.now();
   final amountcontroller = TextEditingController();
   final _user = Hive.box('user');
+  // ignore: prefer_typing_uninitialized_variables
   var userNo;
   late int accountbalance;
   late int savingsbalance;
   String transactiondate = "";
+  bool hasSavings = false;
+  double loanlimit = 0;
 
   @override
   void initState() {
@@ -48,6 +51,9 @@ class _SavingsPageState extends State<SavingsPage> {
     setState(() {
       accountbalance = accountdata['balance'];
       savingsbalance = savingsdata['balance'];
+      if (savingsbalance > 0) {
+        hasSavings = true;
+      }
     });
   }
 
@@ -55,7 +61,7 @@ class _SavingsPageState extends State<SavingsPage> {
     if (accountbalance >= int.parse(amountcontroller.text)) {
       accountbalance = accountbalance - int.parse(amountcontroller.text);
       savingsbalance = savingsbalance + int.parse(amountcontroller.text);
-      double loanlimit = savingsbalance * 1.5;
+      loanlimit = savingsbalance * 1.5;
       await FirebaseFirestore.instance
           .collection("account_entitty")
           .doc(userNo)
@@ -68,12 +74,7 @@ class _SavingsPageState extends State<SavingsPage> {
           .update({
         "balance": savingsbalance,
       });
-      await FirebaseFirestore.instance
-          .collection("loans_entity")
-          .doc(userNo)
-          .set({
-        "balance": loanlimit,
-      });
+      await updateloans();
       Map<String, dynamic> savingstransaction = {
         "date": transactiondate,
         "action": "Deposit",
@@ -99,8 +100,22 @@ class _SavingsPageState extends State<SavingsPage> {
     }
   }
 
-  Future<void> updateloans () async {
-    
+  Future<void> updateloans() async {
+    if (hasSavings) {
+      await FirebaseFirestore.instance
+          .collection("loans_entity")
+          .doc(userNo)
+          .update({
+        "balance": loanlimit,
+      });
+    } else {
+      await FirebaseFirestore.instance
+          .collection("loans_entity")
+          .doc(userNo)
+          .set({
+        "balance": loanlimit,
+      });
+    }
   }
 
   @override
