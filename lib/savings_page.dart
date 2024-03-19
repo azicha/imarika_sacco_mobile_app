@@ -114,9 +114,7 @@ class _SavingsPageState extends State<SavingsPage> {
       await FirebaseFirestore.instance
           .collection("loans_entity")
           .doc(userNo)
-          .set({
-        "balance": loanlimit,
-      });
+          .set({"balance": loanlimit, "amount to be paid": 0});
     }
   }
 

@@ -23,6 +23,7 @@ class _LoansPageState extends State<LoansPage> {
     '1 YEAR @ 18.00%',
   ];
   String? selectedrate;
+  double loanTaken = 0;
 
   @override
   void initState() {
@@ -46,39 +47,40 @@ class _LoansPageState extends State<LoansPage> {
     var data = loanssnapshot.data() as Map<String, dynamic>;
     setState(() {
       currentLimit = data['balance'];
-      print(currentLimit);
+      loanTaken = data['amount to be paid'];
     });
   }
 
   void interestCalculations() async {
     if (amountcontroller.text.isNotEmpty && selectedrate != null) {
       var interest;
-      var payableamount;
+      double payableamount = 0;
       String payDate = '';
-      currentLimit = currentLimit - int.parse(amountcontroller.text);
+      int limit = currentLimit - int.parse(amountcontroller.text);
       switch (selectedrate) {
         case '90 DAYS @ 9.30%':
           interest = double.parse(amountcontroller.text) * 0.093;
-          payableamount = (double.parse(amountcontroller.text) + interest)
-              .toStringAsFixed(2);
+          payableamount = double.parse(amountcontroller.text) + interest;
+
           DateTime paydate = date.add(const Duration(days: 90));
           payDate = DateFormat.yMMMEd().format(paydate).toString();
           break;
         case '180 DAYS @ 12.50%':
           interest = double.parse(amountcontroller.text) * 0.125;
-          payableamount = (double.parse(amountcontroller.text) + interest)
-              .toStringAsFixed(2);
+          payableamount = double.parse(amountcontroller.text) + interest;
+
           DateTime paydate = date.add(const Duration(days: 180));
           payDate = DateFormat.yMMMEd().format(paydate).toString();
           break;
         case '1 YEAR @ 18.00%':
           interest = double.parse(amountcontroller.text) * 0.18;
-          payableamount = (double.parse(amountcontroller.text) + interest)
-              .toStringAsFixed(2);
+          payableamount = double.parse(amountcontroller.text) + interest;
+
           DateTime paydate = date.add(const Duration(days: 365));
           payDate = DateFormat.yMMMEd().format(paydate).toString();
           break;
       }
+      double loan_taken = payableamount + loanTaken;
       Map<String, dynamic> loanrequest = {
         "userNo": userNo,
         "date": DateFormat.yMMMEd().format(date).toString(),
@@ -94,9 +96,9 @@ class _LoansPageState extends State<LoansPage> {
         "date": DateFormat.yMMMEd().format(date).toString(),
         "amount": int.parse(amountcontroller.text),
         "interest": interest,
-        "amount to be paid": payableamount,
+        "amount to be paid": loan_taken,
         "date to be paid": payDate,
-        "balance": currentLimit,
+        "balance": limit,
       });
       await FirebaseFirestore.instance
           .collection("transactions_entity")
@@ -121,129 +123,131 @@ class _LoansPageState extends State<LoansPage> {
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
-          var data = snapshot.data ?? () as Map<String, dynamic>;
-          bool hasLoan = snapshot.data?.get('amount to be paid') != null;
+          bool hasLoan = snapshot.data?.get('amount to be paid') > 0;
           return Scaffold(
             appBar: AppBar(
               title: const Text('Request Loan'),
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: [
-                            const Icon(
-                              Icons.local_atm_outlined,
-                              size: 46,
-                            ),
-                            const Text(
-                              'Loan Limit',
-                              style: TextStyle(
-                                  fontSize: 32, fontWeight: FontWeight.bold),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(
-                              '${snapshot.data?.get("balance")}',
-                              style: const TextStyle(
-                                fontSize: 20,
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: double.infinity,
+                      child: Card(
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: [
+                              const Icon(
+                                Icons.local_atm_outlined,
+                                size: 46,
                               ),
-                            ),
-                          ],
+                              const Text(
+                                'Loan Limit',
+                                style: TextStyle(
+                                    fontSize: 32, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                '${snapshot.data?.get("balance")}',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  DropInput(
-                      items: duration,
-                      selectedValue: selectedrate,
-                      hint: 'Select Duration',
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedrate = value;
-                        });
-                      }),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextField(
-                    controller: amountcontroller,
-                    decoration: const InputDecoration(
-                      hintText: 'ENTER AMOUNT',
-                      hintStyle: TextStyle(color: Colors.black26),
-                      focusedBorder: border,
+                    const SizedBox(
+                      height: 20,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    onPressed: interestCalculations,
-                    style: const ButtonStyle(
-                      foregroundColor: MaterialStatePropertyAll(Colors.white),
-                      backgroundColor:
-                          MaterialStatePropertyAll(Colors.deepPurple),
-                      fixedSize: MaterialStatePropertyAll(
-                        Size(150, 40),
+                    DropInput(
+                        items: duration,
+                        selectedValue: selectedrate,
+                        hint: 'Select Duration',
+                        onChanged: (String? value) {
+                          setState(() {
+                            selectedrate = value;
+                          });
+                        }),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextField(
+                      controller: amountcontroller,
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        hintText: 'ENTER AMOUNT',
+                        hintStyle: TextStyle(color: Colors.black26),
+                        focusedBorder: border,
                       ),
                     ),
-                    child: const Text('Submit'),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: hasLoan
-                            ? Column(
-                                children: [
-                                  const Text(
-                                    'You\'ll be required to pay',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${snapshot.data?.get('amount to be paid')}',
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    snapshot.data?.get('date to be paid'),
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : const Text('No loan available'),
-                      ),
+                    const SizedBox(
+                      height: 20,
                     ),
-                  )
-                ],
+                    ElevatedButton(
+                      onPressed: interestCalculations,
+                      style: const ButtonStyle(
+                        foregroundColor: MaterialStatePropertyAll(Colors.white),
+                        backgroundColor:
+                            MaterialStatePropertyAll(Colors.deepPurple),
+                        fixedSize: MaterialStatePropertyAll(
+                          Size(150, 40),
+                        ),
+                      ),
+                      child: const Text('Submit'),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Card(
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: hasLoan
+                              ? Column(
+                                  children: [
+                                    const Text(
+                                      'You\'ll be required to pay',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${snapshot.data?.get('amount to be paid')}',
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      "by: ${snapshot.data?.get('date to be paid')}",
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const Text('No loan available'),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );
@@ -253,6 +257,7 @@ class _LoansPageState extends State<LoansPage> {
     );
   }
 }
+
 
 class DropInput extends StatefulWidget {
   final List<String> items;
