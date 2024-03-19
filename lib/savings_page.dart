@@ -76,6 +76,7 @@ class _SavingsPageState extends State<SavingsPage> {
       });
       await updateloans();
       Map<String, dynamic> savingstransaction = {
+        "userNo": userNo,
         "date": transactiondate,
         "action": "Deposit",
         'from': 'Main Account',
@@ -83,6 +84,7 @@ class _SavingsPageState extends State<SavingsPage> {
         "amount": int.parse(amountcontroller.text)
       };
       Map<String, dynamic> maintransaction = {
+        "userNo": userNo,
         "date": transactiondate,
         "action": "Send",
         'from': 'Main Account',
