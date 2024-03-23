@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -78,6 +79,12 @@ class _DepositPageState extends State<DepositPage> {
     });
   }
 
+  String reverseString(String input) {
+    final base64Encoder = base64.encoder;
+    final encodedSample = base64Encoder.convert(input.codeUnits);
+    return encodedSample;
+  }
+
   Future<void> getuser() async {
     DocumentSnapshot snapshot = await FirebaseFirestore.instance
         .collection("account_entitty")
@@ -149,7 +156,7 @@ class _DepositPageState extends State<DepositPage> {
               ),
               const TextField(
                 decoration: InputDecoration(
-                  hintText: 'Enter M-PESA pin',
+                  hintText: 'Enter Phone Number',
                   hintStyle: TextStyle(color: Colors.black26),
                 ),
                 keyboardType: TextInputType.numberWithOptions(
