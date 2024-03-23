@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class DepositPage extends StatefulWidget {
   const DepositPage({super.key});
@@ -17,7 +18,11 @@ class _DepositPageState extends State<DepositPage> {
   var userNo;
   final amountcontroller = TextEditingController();
   late int balance;
+  var authKey;
   String transactiondate = "";
+  final consumerKey = 'Fs9roVzydTrwCy9vN9E7pA1sGXnkXett0GmGDhKmmtQV8YDZ';
+  final consumerSecret =
+      'ZDFHhplmoGwwRER9AMqBP8IYIUToELns56kHLlk70FWtBgldnq8qdRrE96mRoGAG';
 
   void _confirmpyAlert(String amount) {
     showDialog(
@@ -79,10 +84,53 @@ class _DepositPageState extends State<DepositPage> {
     });
   }
 
-  String reverseString(String input) {
+  String encodeStringToB64(String input) {
     final base64Encoder = base64.encoder;
     final encodedSample = base64Encoder.convert(input.codeUnits);
     return encodedSample;
+  }
+
+  Future<void> obtainAuthKey() async {
+    var url = Uri.parse(
+        'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials');
+    // make http post request
+    var response = await http.get(url, headers: {
+      'Authorization':
+          "Basic ${("$consumerKey:$consumerSecret")}",
+    });
+
+    debugPrint(response.body);
+    // debugPrint("Access token: ", response.body[0]);
+    // Check for successful response status code
+    if (response.statusCode == 200) {
+      try {
+        // Decode the JSON response
+        final decodedResponse =
+            json.decode(response.body) as Map<String, dynamic>;
+
+        // Extract the access token
+        final accessToken = decodedResponse['access_token'];
+        // ignore: prefer_interpolation_to_compose_strings
+        debugPrint("Received access token: " + accessToken);
+
+        // Handle null access token (optional)
+        if (accessToken == null) {
+          debugPrint('Access token not found in response.');
+          return null;
+        } else {
+          return accessToken;
+        }
+      } on FormatException catch (e) {
+        debugPrint('Error decoding JSON response: $e');
+        return null; // Or throw an exception based on your needs
+      } catch (e) {
+        debugPrint('Error obtaining auth key: $e');
+        return null; // Or throw an exception based on your needs
+      }
+    } else {
+      debugPrint('Request failed with status: ${response.statusCode}');
+      return null; // Or throw an exception based on your needs
+    }
   }
 
   Future<void> getuser() async {
@@ -168,9 +216,7 @@ class _DepositPageState extends State<DepositPage> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    if (amountcontroller.text.isNotEmpty) {
-                      _confirmpyAlert(amountcontroller.text);
-                    }
+                    obtainAuthKey();
                   },
                   style: const ButtonStyle(
                       foregroundColor: MaterialStatePropertyAll(
